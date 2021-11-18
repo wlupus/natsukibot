@@ -14,7 +14,7 @@ var (
 
 func init() {
     var err error
-    cfg, err = ini.Load("../src/conf/app.ini")
+    cfg, err = ini.Load("src/conf/app.ini")
     if err != nil {
         logger.Fatal("Fail to parse config file:", err)
     }
