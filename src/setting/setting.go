@@ -7,8 +7,11 @@ import (
 
 var (
     TelebotToken string
+
     MysqlUserName string
     MysqlPassword string
+
+    CheckinReward int
     cfg *ini.File
 )
 
@@ -20,6 +23,7 @@ func init() {
     }
     loadToken()
     loadMysql()
+    loadBot()
 }
 
 func loadMysql() {
@@ -37,4 +41,13 @@ func loadToken() {
         logger.Fatal("Fail to get section 'telegram':", err)
     }
     TelebotToken = sec.Key("bot_token").String()
+}
+
+func loadBot() {
+    sec, err := cfg.GetSection("bot")
+    if err != nil {
+        logger.Error("Fail to get section 'bot':", err)
+    } else {
+        CheckinReward = sec.Key("checkin_reward").MustInt(0)
+    }
 }

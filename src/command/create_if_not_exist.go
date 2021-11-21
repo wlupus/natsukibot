@@ -7,6 +7,9 @@ import (
 )
 
 func createIfNotExist(userName string) int {
+    if userName == "" {
+        return error.NoUserName
+    }
     db := sql.DB
     var index int
     err := db.QueryRow("select count(*) from users").Scan(&index)

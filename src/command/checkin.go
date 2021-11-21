@@ -5,6 +5,7 @@ import (
     "wlupusbot/src/error"
     "wlupusbot/src/logger"
     "wlupusbot/src/model"
+    "wlupusbot/src/setting"
     "wlupusbot/src/sql"
 )
 
@@ -21,6 +22,10 @@ var (
         languageFlags[EN]: `Internal server error`,
         languageFlags[CN]: `内部服务错误`,
     }
+    noUserName = map[string]string{
+        languageFlags[EN]: `Can't use this function because you don't have a username`,
+        languageFlags[CN]: `用户名为空, 无法使用此功能`,
+    }
 )
 
 func checkin(userName string) int {
@@ -28,6 +33,9 @@ func checkin(userName string) int {
     res := createIfNotExist(userName)
     if res == error.InternalError {
         return error.InternalError
+    }
+    if res == error.NoUserName {
+        return error.NoUserName
     }
     // check existence of table daily_checkin
     var index int
@@ -52,6 +60,9 @@ func checkin(userName string) int {
         } else {
             logger.Info("update daily_checkin row for ", userName)
         }
+        var user model.User
+        db.Get(&user, "select * from users where username=?", userName)
+        db.Exec("update users set pneuma=? where username=?", user.Pneuma + setting.CheckinReward, userName)
     }
     return error.Success
 }
@@ -75,6 +86,12 @@ func RegisterCheckin(bot *tb.Bot) {
             response, ok := internalError[defaultLanguage]
             if !ok {
                 response = internalError[languageFlags[CN]]
+            }
+            bot.Reply(m, response)
+        } else if code == error.NoUserName {
+            response, ok := noUserName[defaultLanguage]
+            if !ok {
+                response = noUserName[languageFlags[CN]]
             }
             bot.Reply(m, response)
         }
