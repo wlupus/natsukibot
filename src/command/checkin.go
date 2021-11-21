@@ -7,12 +7,13 @@ import (
     "wlupusbot/src/model"
     "wlupusbot/src/setting"
     "wlupusbot/src/sql"
+    "strconv"
 )
 
 var (
 	successCheckin = map[string]string{
-        languageFlags[EN]: `Checkin success, ` + string(setting.CheckinReward) + " pneuma rewarded",
-        languageFlags[CN]: `签到成功, 获得` + string(setting.CheckinReward) + " pneuma",
+        languageFlags[EN]: `Checkin success, ` + strconv.Itoa(setting.CheckinReward) + " pneuma rewarded",
+        languageFlags[CN]: `签到成功, 获得` + strconv.Itoa(setting.CheckinReward) + " pneuma",
     }
     alreadyCheckin = map[string]string{
         languageFlags[EN]: `You've checked in already`,

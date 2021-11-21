@@ -6,6 +6,7 @@ import (
     "wlupusbot/src/logger"
     "wlupusbot/src/model"
     "wlupusbot/src/sql"
+    "strconv"
 )
 
 var (
@@ -51,7 +52,7 @@ func RegisterGetPneuma(bot *tb.Bot) {
             if !ok {
                 response = successGetPneuma[languageFlags[CN]]
             }
-            response += string(value)
+            response += strconv.Itoa(value)
             bot.Reply(m, response)
         }
     })
