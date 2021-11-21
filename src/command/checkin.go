@@ -11,8 +11,8 @@ import (
 
 var (
 	successCheckin = map[string]string{
-        languageFlags[EN]: `Checkin success`,
-        languageFlags[CN]: `签到成功`,
+        languageFlags[EN]: `Checkin success, ` + string(setting.CheckinReward) + " pneuma rewarded",
+        languageFlags[CN]: `签到成功, 获得` + string(setting.CheckinReward) + " pneuma",
     }
     alreadyCheckin = map[string]string{
         languageFlags[EN]: `You've checked in already`,

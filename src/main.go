@@ -3,10 +3,10 @@ package main
 import (
     tb "gopkg.in/tucnak/telebot.v2"
     "time"
-    "wlupusbot/src/logger"
     "wlupusbot/src/command"
-    "wlupusbot/src/setting"
+    "wlupusbot/src/logger"
     "wlupusbot/src/schedule"
+    "wlupusbot/src/setting"
 )
 
 func initializeSchedule() {
@@ -18,6 +18,7 @@ func registerHandle(bot *tb.Bot) {
     command.RegisterAbout(bot)
     command.RegisterLanguage(bot)
     command.RegisterCheckin(bot)
+    command.RegisterGetPneuma(bot)
 }
 
 func main() {
